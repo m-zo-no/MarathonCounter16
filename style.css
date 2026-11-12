@@ -1,0 +1,827 @@
+:root {
+  font-family:
+    "Hiragino Maru Gothic ProN",
+    "Hiragino Sans",
+    "Yu Gothic",
+    "Meiryo",
+    sans-serif;
+
+  color: #303030;
+  background: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#app {
+  width: 100%;
+
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+/* ==========================================================
+   役割選択
+   ========================================================== */
+
+.role-screen {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 0;
+  padding: 16px;
+  background: #f4f4f4;
+}
+
+.role-panel {
+  width: min(100%, 620px);
+  max-height: 100%;
+  overflow: auto;
+
+  padding: clamp(16px, 3vw, 28px);
+
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px #00000012;
+}
+
+.role-panel h1 {
+  margin: 0 0 1em;
+  text-align: center;
+  font-size: clamp(20px, 3vw, 29px);
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  font-size: clamp(16px, 2.2vw, 22px);
+}
+
+.role-option input {
+  width: 20px;
+  height: 20px;
+}
+
+.field-label {
+  display: block;
+  margin: 18px 0 6px;
+  font-weight: bold;
+}
+
+.key-input {
+  width: 100%;
+  padding: 10px;
+
+  border: 1px solid #aaa;
+  border-radius: 6px;
+
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.role-help {
+  color: #666;
+  font-size: clamp(12px, 1.5vw, 15px);
+  line-height: 1.5;
+}
+
+.launch-button {
+  display: block;
+  width: min(100%, 280px);
+  margin: 12px auto 0;
+  padding: 10px;
+
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  background: #f4f4f4;
+
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.error-message {
+  min-height: 1.2em;
+  margin: 8px 0 0;
+  color: #c62828;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ==========================================================
+   接続情報
+   ========================================================== */
+
+.connection-header {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  background: #edf5fc;
+  color: #355a70;
+}
+
+.connection-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.connection-info {
+  min-width: 0;
+  font-size: clamp(12px, 1.8vw, 18px);
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.connection-status,
+.notice {
+  font-size: clamp(10px, 1.3vw, 14px);
+  line-height: 1.25;
+}
+
+.notice {
+  color: #c62828;
+}
+
+.notice:empty {
+  display: none;
+}
+
+.status-online {
+  color: #286f59;
+}
+
+.status-offline {
+  color: #a45c00;
+}
+
+.small-button {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  background: #eee;
+  color: #444;
+
+  font-size: clamp(11px, 1.3vw, 14px);
+  white-space: nowrap;
+}
+
+.small-button:disabled {
+  opacity: 0.48;
+}
+
+.reset-button {
+  background: #fff0df;
+  border-color: #e4b878;
+  color: #8b4b00;
+}
+
+/* ==========================================================
+   人数選択
+   ========================================================== */
+
+.setup-screen {
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px;
+  overflow: auto;
+
+  background: #fff9ee;
+}
+
+.setup-panel {
+  width: min(100%, 850px);
+  text-align: center;
+}
+
+.setup-panel h1 {
+  margin: 8px 0;
+  color: #355a70;
+  font-size: clamp(20px, 3.2vw, 34px);
+}
+
+.setup-message {
+  color: #6b7b87;
+  font-size: clamp(12px, 1.6vw, 17px);
+}
+
+.runner-illustration {
+  margin: 18px auto;
+  padding: 24px 10px;
+
+  border-radius: 16px;
+  background: #e8f8ff;
+
+  font-size: clamp(32px, 6vw, 70px);
+}
+
+.setup-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  color: #355a70;
+  font-size: clamp(15px, 2vw, 22px);
+  font-weight: bold;
+}
+
+.setup-controls select {
+  min-width: 76px;
+  padding: 6px 10px;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+
+  background: #fff;
+  color: #303030;
+
+  font: inherit;
+}
+
+.next-button {
+  margin: 16px 0 8px;
+  padding: 8px 35px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: #ff8fad;
+  color: #fff;
+
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: bold;
+}
+
+.next-button:disabled {
+  opacity: 0.48;
+}
+
+.setup-help {
+  color: #777;
+  font-size: clamp(11px, 1.3vw, 14px);
+  line-height: 1.6;
+}
+
+/* ==========================================================
+   記録画面
+   ========================================================== */
+
+.counter-screen {
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 4px;
+  overflow: hidden;
+}
+
+.counter-toolbar {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  min-height: 36px;
+}
+
+.start-button {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background: #e02020;
+  color: #fff;
+
+  font-size: clamp(13px, 1.8vw, 20px);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.start-button:disabled {
+  opacity: 0.48;
+}
+
+.start-button.running {
+  background: #e8f7df;
+  color: #286f59;
+  opacity: 1;
+}
+
+.timer {
+  flex: 0 0 auto;
+  color: #e02020;
+
+  font-size: clamp(18px, 2.5vw, 29px);
+  font-weight: bold;
+
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.counter-help {
+  flex: 0 0 auto;
+  padding: 3px;
+  color: #666;
+
+  text-align: center;
+  font-size: clamp(10px, 1.3vw, 14px);
+}
+
+/* ==========================================================
+   表
+   ========================================================== */
+
+.table-scroll {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lap-table {
+  min-width: 850px;
+  border-top: 2px solid #087ce5;
+  border-left: 2px solid #087ce5;
+}
+
+.table-header,
+.student-row {
+  display: grid;
+
+  grid-template-columns: 13.6% 6.4% 64% 16%;
+  min-width: 0;
+}
+
+.table-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  min-height: 38px;
+  background: #fff;
+}
+
+.header-name,
+.header-pace,
+.header-actions,
+.header-laps > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+
+  border-right: 2px solid #087ce5;
+  border-bottom: 2px solid #087ce5;
+
+  color: #286f59;
+  font-size: clamp(10px, 1.3vw, 15px);
+  font-weight: bold;
+  text-align: center;
+}
+
+.header-name {
+  background: #ffff80;
+}
+
+.header-pace {
+  background: #dedede;
+}
+
+.header-actions {
+  background: #e8f8ff;
+}
+
+.header-laps {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.student-row {
+  min-height: 58px;
+}
+
+.name-cell,
+.pace-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 58px;
+  padding: 2px 3px;
+
+  border: 0;
+  border-right: 2px solid #087ce5;
+  border-bottom: 2px solid #087ce5;
+
+  color: #286f59;
+
+  font-weight: bold;
+  text-align: center;
+}
+
+.name-cell {
+  background: #ffff80;
+  font-size: clamp(11px, 1.4vw, 17px);
+  overflow-wrap: anywhere;
+}
+
+.pace-cell {
+  background: #dedede;
+  font-size: clamp(10px, 1.15vw, 14px);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.name-cell:disabled,
+.pace-cell:disabled {
+  opacity: 1;
+}
+
+.name-cell.retired-name,
+.pace-cell.retired-pace {
+  background: #e5d3d3;
+  color: #8c3030;
+}
+
+.lap-cells {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+
+  min-width: 0;
+  min-height: 58px;
+}
+
+.lap-cell,
+.lap-unused,
+.retired-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+
+  border-right: 2px solid #087ce5;
+  border-bottom: 2px solid #087ce5;
+}
+
+.lap-cell {
+  flex-direction: column;
+  gap: 3px;
+
+  overflow: hidden;
+  padding: 2px 1px;
+
+  background: #fff;
+  color: #176bbb;
+
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* 記録済みの周回セル全体に色を付ける */
+.lap-cell.difference-green {
+  background: #b9f2ad;
+  color: #176c1c;
+}
+
+.lap-cell.difference-red {
+  background: #ffd1d8;
+  color: #bd1e35;
+}
+
+.lap-cell.difference-blue {
+  background: #c6efff;
+  color: #126ca4;
+}
+
+.lap-difference {
+  display: inline-block;
+  max-width: 100%;
+  padding: 2px 3px;
+
+  font-size: clamp(10px, 1.2vw, 14px);
+  font-weight: 900;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.lap-time {
+  font-size: clamp(9px, 1.1vw, 13px);
+  white-space: nowrap;
+}
+
+.lap-unused {
+  background: #dedede;
+}
+
+.retired-cell {
+  background: #f4e4e4;
+  color: #9c3838;
+  font-weight: bold;
+}
+
+.action-cells {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: 0;
+}
+
+.minus-cell,
+.plus-cell {
+  min-width: 0;
+  min-height: 58px;
+  padding: 4px 1px;
+
+  border: 0;
+  border-right: 2px solid #087ce5;
+  border-bottom: 2px solid #087ce5;
+
+  font-size: clamp(14px, 1.6vw, 19px);
+  font-weight: bold;
+}
+
+.minus-cell {
+  background: #d9f1ff;
+  color: #176bbb;
+}
+
+.plus-cell {
+  background: #ffe3eb;
+  color: #b83c65;
+}
+
+.minus-cell.finish-ready {
+  background: #fff0a7;
+  color: #ba4200;
+}
+
+.minus-cell:disabled,
+.plus-cell:disabled {
+  opacity: 0.45;
+}
+
+.finish-cell,
+.viewer-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 58px;
+
+  border-right: 2px solid #087ce5;
+  border-bottom: 2px solid #087ce5;
+
+  font-weight: bold;
+  text-align: center;
+}
+
+.finish-cell {
+  background: #fff4b8;
+  color: #ca3d20;
+  font-size: clamp(12px, 1.5vw, 18px);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.viewer-cell {
+  background: #f3f7f8;
+  color: #666;
+  font-size: clamp(10px, 1.2vw, 14px);
+}
+
+/* ==========================================================
+   編集ダイアログ
+   ========================================================== */
+
+.edit-dialog {
+  width: min(94vw, 500px);
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow: auto;
+
+  padding: 20px;
+
+  border: 1px solid #aaa;
+  border-radius: 12px;
+
+  box-shadow: 0 8px 35px #0003;
+}
+
+.edit-dialog::backdrop {
+  background: #0008;
+}
+
+.edit-dialog h2 {
+  margin: 0 0 16px;
+  color: #355a70;
+  font-size: 21px;
+}
+
+.edit-dialog form > label:not(.checkbox-label) {
+  display: block;
+  margin: 12px 0 5px;
+  font-weight: bold;
+}
+
+.edit-dialog input[type="text"] {
+  width: 100%;
+  padding: 8px;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+
+  font-size: 17px;
+}
+
+.edit-dialog #editTarget {
+  min-width: 75px;
+  padding: 8px 10px;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+
+  background: #fff;
+  color: #303030;
+
+  font-size: 17px;
+}
+
+.edit-dialog .pace-label {
+  margin: 12px 0 5px;
+  font-weight: bold;
+}
+
+.pace-selects {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pace-select-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.pace-select-item select {
+  min-width: 75px;
+  padding: 8px 10px;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+
+  background: #fff;
+  color: #303030;
+
+  font: inherit;
+}
+
+.dialog-help {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.checkbox-label input {
+  width: 18px;
+  height: 18px;
+}
+
+.dialog-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dialog-buttons button {
+  padding: 8px 12px;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+
+  background: #f4f4f4;
+}
+
+.dialog-buttons button:disabled {
+  opacity: 0.5;
+}
+
+.dialog-buttons .save-button {
+  border-color: #27816a;
+  background: #27816a;
+  color: #fff;
+}
+
+.dialog-buttons .retire-button {
+  margin-right: auto;
+  border-color: #c99393;
+  background: #fff0f0;
+  color: #a12f2f;
+}
+
+/* ==========================================================
+   iPad縦画面などの幅調整
+   ========================================================== */
+
+@media (orientation: portrait) and (max-width: 1024px) {
+  .lap-table {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .pace-cell,
+  .lap-time {
+    font-size: clamp(9px, 1.3vw, 14px);
+  }
+
+  .lap-difference {
+    font-size: clamp(10px, 1.4vw, 15px);
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+
+  .pace-cell {
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+}

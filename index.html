@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#fff9ee">
+
+  <title>持久走・周回カウンター</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main id="app">
+    <!-- 役割選択 -->
+    <section id="roleScreen" class="role-screen">
+      <div class="role-panel">
+        <h1>この端末の役割</h1>
+
+        <label class="role-option">
+          <input type="radio" name="role" value="A" checked>
+          <span>A：周回記録・設定（親機）</span>
+        </label>
+
+        <label class="role-option">
+          <input type="radio" name="role" value="B">
+          <span>B：ゴール記録</span>
+        </label>
+
+        <label class="role-option">
+          <input type="radio" name="role" value="C">
+          <span>C：閲覧専用</span>
+        </label>
+
+        <label class="field-label" for="roomKey">
+          接続キー
+        </label>
+
+        <input
+          id="roomKey"
+          class="key-input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          placeholder="Aに表示されるキー"
+          disabled
+        >
+
+        <p class="role-help">
+          Aを先に起動してください。<br>
+          BとCは、Aに表示される接続キーを入力します。<br>
+          Aの接続情報は、このブラウザーに保存されます。
+        </p>
+
+        <button id="launchButton" class="launch-button" type="button">
+          起動
+        </button>
+
+        <p
+          id="roleError"
+          class="error-message"
+          aria-live="polite"
+        ></p>
+      </div>
+    </section>
+
+    <!-- 接続情報 -->
+    <header id="connectionHeader" class="connection-header hidden">
+      <div class="connection-top">
+        <div id="connectionInfo" class="connection-info"></div>
+
+        <button id="leaveButton" class="small-button" type="button">
+          役割選択へ
+        </button>
+      </div>
+
+      <div id="connectionStatus" class="connection-status"></div>
+      <div id="notice" class="notice" aria-live="polite"></div>
+    </header>
+
+    <!-- 人数選択 -->
+    <section id="setupScreen" class="setup-screen hidden">
+      <div class="setup-panel">
+        <h1>持久走・周回カウンター</h1>
+
+        <p class="setup-message">
+          それぞれのペースで、最後まで走ろう！
+        </p>
+
+        <div class="runner-illustration" aria-hidden="true">
+          🏃　🏃‍♀️　🏃
+        </div>
+
+        <div class="setup-controls">
+          <label for="studentCount">ランナーの人数</label>
+
+          <select id="studentCount" aria-label="ランナーの人数"></select>
+
+          <span>名</span>
+        </div>
+
+        <button id="prepareButton" class="next-button" type="button">
+          次の画面へ ▶
+        </button>
+
+        <p class="setup-help">
+          次の画面で、名前・周数・目標ペースを設定します。<br>
+          A：設定・スタート・通常の周回記録<br>
+          B：残り1周からのゴール記録<br>
+          C：閲覧専用
+        </p>
+      </div>
+    </section>
+
+    <!-- 周回記録 -->
+    <section id="counterScreen" class="counter-screen hidden">
+      <div class="counter-toolbar">
+        <button id="startButton" class="start-button" type="button">
+          ▶ スタート
+        </button>
+
+        <div id="timer" class="timer">00:00</div>
+
+        <button
+          id="resetButton"
+          class="small-button reset-button"
+          type="button"
+        >
+          計測リセット
+        </button>
+
+        <button id="setupButton" class="small-button" type="button">
+          人数設定へ
+        </button>
+      </div>
+
+      <div id="counterHelp" class="counter-help"></div>
+
+      <div class="table-scroll">
+        <div class="lap-table">
+          <div class="table-header">
+            <div class="header-name">名前</div>
+            <div class="header-pace">目標<br>ペース</div>
+
+            <div class="header-laps">
+              <div>1周</div>
+              <div>2周</div>
+              <div>3周</div>
+              <div>4周</div>
+              <div>5周</div>
+              <div>6周</div>
+              <div>7周</div>
+              <div>8周</div>
+              <div>9周</div>
+              <div>10周</div>
+            </div>
+
+            <div class="header-actions">操作／合計</div>
+          </div>
+
+          <div id="studentGrid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ランナー設定 -->
+  <dialog id="editDialog" class="edit-dialog">
+    <form id="editForm">
+      <h2>ランナーの設定</h2>
+
+      <label for="editName">名前</label>
+      <input
+        id="editName"
+        type="text"
+        maxlength="100"
+        required
+        autocomplete="off"
+      >
+
+      <label for="editTarget">走る周数</label>
+      <select id="editTarget" aria-label="走る周数"></select>
+
+      <div id="editPaceLabel" class="pace-label">
+        1周あたりの目標ペース
+      </div>
+
+      <div
+        class="pace-selects"
+        role="group"
+        aria-labelledby="editPaceLabel"
+      >
+        <label class="pace-select-item">
+          <select
+            id="editPaceMinutes"
+            aria-label="目標ペースの分"
+          ></select>
+          <span>分</span>
+        </label>
+
+        <label class="pace-select-item">
+          <select
+            id="editPaceSeconds"
+            aria-label="目標ペースの秒"
+          ></select>
+          <span>秒</span>
+        </label>
+      </div>
+
+      <p class="dialog-help">
+        目標ペースは0秒より大きい値を選んでください。<br>
+        周数を変更すると、そのランナーの記録は初期化されます。
+      </p>
+
+      <label class="checkbox-label">
+        <input id="editReset" type="checkbox">
+        このランナーの記録を初期化する
+      </label>
+
+      <p id="editError" class="error-message" aria-live="polite"></p>
+
+      <div class="dialog-buttons">
+        <button id="retireButton" class="retire-button" type="button">
+          リタイヤにする
+        </button>
+
+        <button id="cancelEditButton" type="button">
+          キャンセル
+        </button>
+
+        <button id="saveEditButton" class="save-button" type="submit">
+          保存
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
